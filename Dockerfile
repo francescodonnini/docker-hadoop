@@ -2,7 +2,7 @@
 #
 # docker build -t matnar/hadoop:3.3.2 .
 
-FROM ubuntu:18.04
+FROM ubuntu:24.04
 USER root
 
 # install dev tools
@@ -14,28 +14,28 @@ RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 
 # # java
-ENV JAVA_HOME /usr/lib/jvm/default-java
-ENV PATH $PATH:$JAVA_HOME/bin
+ENV JAVA_HOME=/usr/lib/jvm/default-java
+ENV PATH=$PATH:$JAVA_HOME/bin
 
 # # hadoop
-RUN wget https://downloads.apache.org/hadoop/common/hadoop-3.3.2/hadoop-3.3.2.tar.gz ; tar -zxf hadoop-3.3.2.tar.gz -C /usr/local/ ; rm hadoop-3.3.2.tar.gz
-RUN cd /usr/local && ln -s ./hadoop-3.3.2 hadoop
+RUN wget https://downloads.apache.org/hadoop/common/current/hadoop-3.4.1.tar.gz ; tar -zxf hadoop-3.4.1.tar.gz -C /usr/local/ ; rm hadoop-3.4.1.tar.gz
+RUN cd /usr/local && ln -s ./hadoop-3.4.1 hadoop
 
 
 # 
-ENV HADOOP_COMMON_HOME /usr/local/hadoop
-ENV HADOOP_HDFS_HOME /usr/local/hadoop
-ENV HADOOP_HOME /usr/local/hadoop
-ENV HADOOP_MAPRED_HOME /usr/local/hadoop
-ENV HADOOP_YARN_HOME /usr/local/hadoop
-ENV HADOOP_CONF_DIR /usr/local/hadoop/etc/hadoop
-ENV YARN_CONF_DIR $HADOOP_HOME/etc/hadoop
-ENV PATH $PATH:$HADOOP_HOME/bin
-ENV HDFS_NAMENODE_USER "root"
-ENV HDFS_DATANODE_USER "root"
-ENV HDFS_SECONDARYNAMENODE_USER "root"
-ENV YARN_RESOURCEMANAGER_USER "root"
-ENV YARN_NODEMANAGER_USER "root"
+ENV HADOOP_COMMON_HOME=/usr/local/hadoop
+ENV HADOOP_HDFS_HOME=/usr/local/hadoop
+ENV HADOOP_HOME=/usr/local/hadoop
+ENV HADOOP_MAPRED_HOME=/usr/local/hadoop
+ENV HADOOP_YARN_HOME=/usr/local/hadoop
+ENV HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+ENV YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+ENV PATH=$PATH:$HADOOP_HOME/bin
+ENV HDFS_NAMENODE_USER="root"
+ENV HDFS_DATANODE_USER="root"
+ENV HDFS_SECONDARYNAMENODE_USER="root"
+ENV YARN_RESOURCEMANAGER_USER="root"
+ENV YARN_NODEMANAGER_USER="root"
 
 # # pseudo distributed
 ADD config/hadoop-env.sh $HADOOP_HOME/etc/hadoop/hadoop-env.sh
@@ -51,9 +51,9 @@ ADD config/bootstrap.sh /usr/local/bootstrap.sh
 RUN chown root:root /usr/local/bootstrap.sh
 RUN chmod 700 /usr/local/bootstrap.sh
 # 
-ENV BOOTSTRAP /usr/local/bootstrap.sh
+ENV BOOTSTRAP=/usr/local/bootstrap.sh
 # 
-CMD /usr/local/bootstrap.sh
+CMD ["/bin/bash", "/usr/local/bootstrap.sh"]
 
 # # Hdfs ports
 EXPOSE 9866 9867 9870 9864 9868 9820 9000 54310
