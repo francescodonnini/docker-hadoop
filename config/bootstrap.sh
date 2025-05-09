@@ -1,5 +1,6 @@
 #!/bin/bash
-sudo sh /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+: ${HADOOP_PREFIX:=/usr/local/hadoop}
+sudo sh $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 
 rm /tmp/*.pid
 service ssh start
