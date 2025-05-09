@@ -2,7 +2,7 @@
 #
 # docker build -t matnar/hadoop:3.3.2 .
 
-FROM ubuntu:24.04
+FROM ubuntu:24.10
 USER root
 
 # install dev tools
@@ -14,7 +14,7 @@ RUN ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 RUN cp /root/.ssh/id_rsa.pub /root/.ssh/authorized_keys
 
 # # java
-ENV JAVA_HOME=/usr/lib/jvm/default-java
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 ENV PATH=$PATH:$JAVA_HOME/bin
 
 # # hadoop
@@ -52,8 +52,8 @@ RUN chown root:root /usr/local/bootstrap.sh
 RUN chmod 700 /usr/local/bootstrap.sh
 # 
 ENV BOOTSTRAP=/usr/local/bootstrap.sh
-# 
-CMD ["/bin/bash", "/usr/local/bootstrap.sh"]
+#
+ENTRYPOINT ["sh", "/usr/local/bootstrap.sh" ]
 
 # # Hdfs ports
 EXPOSE 9866 9867 9870 9864 9868 9820 9000 54310
