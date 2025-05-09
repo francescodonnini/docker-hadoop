@@ -53,6 +53,8 @@ RUN chmod 700 /usr/local/bootstrap.sh
 # 
 ENV BOOTSTRAP=/usr/local/bootstrap.sh
 
+ENTRYPOINT ["sh", "/usr/local/bootstrap.sh"]
+
 # # Hdfs ports
 EXPOSE 9866 9867 9870 9864 9868 9820 9000 54310
 # # Mapred ports
