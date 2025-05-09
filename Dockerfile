@@ -52,6 +52,8 @@ RUN chown root:root /usr/local/bootstrap.sh
 RUN chmod 700 /usr/local/bootstrap.sh
 # 
 ENV BOOTSTRAP=/usr/local/bootstrap.sh
+
+ENTRYPOINT [ "/usr/local/bootstrap.sh" ]
 #
 # # Hdfs ports
 EXPOSE 9866 9867 9870 9864 9868 9820 9000 54310
